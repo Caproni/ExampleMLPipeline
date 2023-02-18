@@ -11,6 +11,7 @@ from example.controllers.example_model import example_model_controller
 
 port = 4646
 host = "localhost"
+model_directory = "./staging"
 
 server = FastAPI()
 

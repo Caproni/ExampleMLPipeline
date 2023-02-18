@@ -7,8 +7,9 @@ Copyright 2023
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from example.utils.return_json import return_json
-from example.utils.logger import logger as log
+from ..load_models import example_model
+from ...utils.return_json import return_json
+from ...utils.logger import logger as log
 
 
 router = APIRouter()
@@ -18,10 +19,10 @@ class ExampleModelInputs(BaseModel):
     """
     Pydantic model for example model inputs
     """
-    ...
+    username: str
 
 
-@router.get("/api/getExampleModelPrediction")
+@router.post("/api/getExampleModelPrediction")
 def get_example_model_prediction(
     model_inputs: ExampleModelInputs,
 ):
@@ -30,12 +31,16 @@ def get_example_model_prediction(
     """
     log.info("Calling get_example_model_prediction")
 
+    # check inputs
+
+    # construct model parameters
+
     try:
-        ...
+        prediction = example_model.predict()
 
         if ...:
             return return_json(
-                message="Successfully selected family-tree person data.",
+                message="Successfully queried model.",
                 success=True,
                 content=...,
             )
