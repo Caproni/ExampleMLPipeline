@@ -4,7 +4,7 @@ Author: Edmund Bennett
 Copyright 2023
 """
 
-from typing import Optional
+from typing import Optional, Tuple
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
@@ -19,8 +19,8 @@ def create_ensemble_model(
     n_estimators: int,
     max_depth: Optional[int],
     random_state: int,
-) -> object:
-    log.info("Calling create_model")
+) -> Tuple[object, float]:
+    log.info("Calling create_ensemble_model")
 
     xs_train, xs_test, y_train, y_test = train_test_split(
         xs,
@@ -35,6 +35,12 @@ def create_ensemble_model(
         random_state=random_state,
     )
 
-    rfc_fitted = rfc.fit(xs_train, y_train)
+    rfc_fitted = rfc.fit(
+        xs_train,
+        y_train.values.ravel(),
+        sample_weight=None,
+    )
 
-    return rfc_fitted
+    score = rfc_fitted.score(xs_test, y_test)
+
+    return rfc_fitted, score

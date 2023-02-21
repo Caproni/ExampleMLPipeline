@@ -4,14 +4,13 @@ Author: Edmund Bennett
 Copyright 2023
 """
 
-from typing import Union
+from typing import Union, Dict, Any
 
 
 def return_json(
     message,
     success: bool = True,
-    response_code: int = 200,
-    content: Union[str, bytes] = None,
+    content: Union[str, bytes, Dict[str, Any]] = None,
 ):
     """
     Convenience wrapper for ASGI return objects
@@ -19,7 +18,6 @@ def return_json(
     resp_dict = {
         "success": success,
         "message": message,
-        "response_code": response_code,
     }
 
     if content:
